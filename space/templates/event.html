@@ -14,7 +14,7 @@
         <div class="card-header">
           <div class="row">
             <div class="col-xs-2">
-              <a href="{% url "view_event" event.id %}">
+              <a href="{% url 'view_event' event.id %}">
                 {% if not event.picture %}
                 <img class="event-pic-thumb" alt="Image manquante" src="/static/img/default-event.png">
                 {% else %}

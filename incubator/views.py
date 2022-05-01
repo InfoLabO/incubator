@@ -6,7 +6,7 @@ from actstream.models import Action
 from django.contrib import messages
 from django.urls import reverse
 
-from space.djredis import get_redis, space_is_open
+from space.fakeredis import get_redis, space_is_open
 from events.models import Event
 from realtime.helpers import feed_reducer
 

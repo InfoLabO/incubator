@@ -50,7 +50,8 @@ def set_space_open(client, is_open):
 
 
 def space_is_open(client):
-    return int(client.get('incubator_status')) == 1
+    #return int(client.get('incubator_status')) == 1
+    pass
 
 
 if settings.FAKE_REDIS:
