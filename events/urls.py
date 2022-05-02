@@ -1,5 +1,7 @@
 from django.urls import path
 from django.contrib.auth.decorators import login_required
+
+import materials
 from .views import (
     EventDetailView, EventAddView, EventEditView, MeetingAddView,
     MeetingEditView, events_home, ical, not_interested, interested, import_pad,

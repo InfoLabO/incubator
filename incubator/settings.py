@@ -80,6 +80,7 @@ INSTALLED_APPS = (
     "actstream",
     "manmail",
     "redir",
+    "materials"
 )
 
 MIDDLEWARE = (

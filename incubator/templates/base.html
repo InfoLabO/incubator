@@ -17,6 +17,7 @@
 
             <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
             <script src="https://kit.fontawesome.com/ba8a2a8bc9.js" crossorigin="anonymous"></script>
+            <script src="https://kit.fontawesome.com/482ab848a2.js" crossorigin="anonymous"></script>
             <link href="{% static 'css/style.css' %}" rel="stylesheet">
             <link rel="icon" href="/static/img/favicon.ico" />
             <title>{% block title %}UrLab{% endblock %}</title>
@@ -41,9 +42,9 @@
             {% endif %}
             <header class="base-header">
                 {% if space_open %}
-                <div id="home-logo"><a href="/"><img id="home-logo-image" src="/static/img/space-invaders-open.png" /></a></div>
+                <div id="home-logo"><a href="/"><img id="home-logo-image" src="/static/infoLabo.png" /></a></div>
                 {% else %}
-                <div id="home-logo"><a href="/"><img id="home-logo-image" src="/static/img/space-invaders.png" /></a></div>
+                <div id="home-logo"><a href="/"><img id="home-logo-image" src="/static/infoLabo.png" /></a></div>
                 {% endif %}
             </header>
 
@@ -59,22 +60,23 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item {% active_if_contains '/projects/' %}">
                             <a class="nav-link" href="{% url 'projects_home' %}">
-                                <i class="fa fa-flask"></i>
+                                <i class="fa-solid fa-hammer"></i>
                                 Nos projets
                             </a>
                         </li>
-                        <li class="nav-item {% active_if_contains '/events/' %}">
+                        <!--<li class="nav-item {% active_if_contains '/events/' %}">
                             <a class="nav-link" href="{% url 'events_home' %}">
                                 <i class="fa fa-calendar"></i>
                                 Evénements
                             </a>
-                        </li>
+                        </li>-->
                         <li class="nav-item {% active_if_contains '/wiki/' %}">
                             <a class="nav-link" href="{% url 'wiki_home' %}">
                                 <i class="fa fa-pencil-square-o"></i>
                                 Wiki
                             </a>
                         </li>
+                        <!--
                         <li class="nav-item {% active_if_contains '/motd/' %}">
                             <a class="nav-link" href="{% url 'motd' '1' %}">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-music-note" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -84,7 +86,7 @@
                                 </svg>
                                 Motd
                             </a>
-                        </li>
+
                         <li class="nav-item {% active_if_contains '/badges/' %}">
                             <a class="nav-link" href="{% url 'badges_home_view' %}">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-patch-check-fll" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +100,20 @@
                                 <i class="fas fa-broadcast-tower"></i>
                                 Conférences
                             </a>
-                        </li>
+                        </li>-->
+                          <li class="nav-item {% active_if_contains '/materials' %}">
+                            <a class="nav-link" href="{% url 'materials' %}">
+                                 <i class="fa-solid fa-computer"></i>
+                                Nos matériels
+                            </a>
+                          </li>
+
+                          <li class="nav-item {% active_if_contains '/materials' %}">
+                            <a class="nav-link" href="{% url 'materials' %}">
+                                 <i class="fa-solid fa-sd-card"></i>
+                                Storage
+                            </a>
+                          </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if request.user.is_authenticated %}
