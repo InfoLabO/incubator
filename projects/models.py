@@ -19,7 +19,6 @@ STATUS_CHOICES = (
     ("p", "proposition"),
     ("i", "in progress"),
     ("f", "finished"),
-    ("a", "ants are gone"),
 )
 
 

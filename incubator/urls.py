@@ -22,6 +22,7 @@ urlpatterns = [
     path('stock/', include('stock.urls')),
     path('badges/', include('badges.urls')),
     path('streams/', include('streams.urls')),
+    path('materials/', include('materials.urls')),
 
     path('sm', events.views.sm),
     path('linux', events.views.linux),
@@ -35,7 +36,7 @@ urlpatterns = [
     path('api/', include('incubator.apiurls')),
     path('notifications/', include('django_nyt.urls')),
     path('r/<slug:short_name>', redir.views.short_url, name='redirection'),
-    path('materials/', include('materials.urls')),
+
 ]
 
 if settings.DEBUG:

@@ -65,7 +65,7 @@
             <a href="{% url 'user_profile' project.maintainer.username %}">
                 {{project.maintainer.username}}
             </a> mais il semblerait qu'il n'ait plus été mis à jour depuis longtemps !<br>
-            Si il vous intérese, n'hésitez pas à contacter son mainteneur et à prendre la main sur le projet.
+            Si il vous intéresse, n'hésitez pas à contacter son mainteneur et à prendre la main sur le projet.
         </div>
         {% endif %}
         {{project.content|markdown}}
