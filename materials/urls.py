@@ -5,6 +5,6 @@ from materials import views
 
 urlpatterns = [
     path('', materials.views.materials_home, name='materials_home'),
-    path('<int:pk>', views.ProjectDetailView.as_view(), name='view_project'),
+    path('<int:pk>', views.MaterialDetailView.as_view(), name='view_project'),
 
 ]
