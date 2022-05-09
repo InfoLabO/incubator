@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views.generic.detail import DetailView
 
 from materials.models import Material
+from projects.forms import CommentForm
 
 
 def materials_home(request):
@@ -15,15 +16,14 @@ def materials_home(request):
 
 class MaterialDetailView(DetailView):
     model = Material
-    template_name = 'project_detail.html'
-    context_object_name = 'project'
+    template_name = 'material_detail.html'
+    context_object_name = 'material'
 
     def get_success_url(self):
         return reverse('view_project', kwargs={'pk': self.object.id})
 
-    """def get_context_data(self, **kwargs):
-        context = super(ProjectDetailView, self).get_context_data(**kwargs)
-        context['form'] = CommentForm(initial={'project': self.object, 'author': self.request.user})
-        return context"""
-
+    def get_context_data(self, **kwargs):
+        context = super(MaterialDetailView, self).get_context_data(**kwargs)
+        context['form'] = CommentForm(initial={'material': self.object, 'author': self.request.user})
+        return context
 

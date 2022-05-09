@@ -29,9 +29,7 @@ Materials à l'Infolabo
                     </p>
                     {% for material in materials %}
                     <div class="row">
-                        {% for project in row %}
-                        {% include "project_card.html" %}
-                        {% endfor %}
+                        {% include "material_card.html" %}
                     </div>
                     <div class="clearfix"></div>
                     {% endfor %}

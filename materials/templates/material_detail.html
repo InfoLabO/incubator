@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load formatting %}
+{% load humanize %}
+
+{% block title %}
+{{material.title}}
+{% endblock %}
+
+{% block opengraph %}
+<meta property="og:title" content="{{material.name}}" />
+<meta property="og:description" content="{{material.description}}" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://urlab.be{% url 'view_material' material.id %}" />
+{% if material.picture %}
+<meta property="og:image" content="https://urlab.be{{material.picture.url}}" />
+{% else %}
+<meta property="og:image" content="https://urlab.be/static/img/default-project.png" />
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<style type="text/css">
+    .project-detail-content img {
+        max-width: 750px;
+        max-height: 750px;
+    }
+    .alert {
+        display:inline-block;
+    }
+</style>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">UrLab</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'materials_home' %}">Materiels</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{material.name}}</li>
+    </ol>
+</nav>
+
+
+<div class="pb-2 mt-4 mb-2 border-bottom">
+    <h1>
+        {{material.name}}
+    </h1>
+    <h1>
+        <small>{{material.description}}</small>
+    </h1>
+</div>
+
+
+<div class="row">
+    <!--<div class="col-md-8 col-md-pull-4 project-detail-content">
+        {% if project.stalled %}
+        <div class="alert alert-warning" role="alert">
+            Ce projet est maintenu par
+            <a href="{% url 'user_profile' project.maintainer.username %}">
+                {{project.maintainer.username}}
+            </a> mais il semblerait qu'il n'ait plus été mis à jour depuis longtemps !<br>
+            Si il vous intéresse, n'hésitez pas à contacter son mainteneur et à prendre la main sur le projet.
+        </div>
+        {% endif %}
+        {{project.content|markdown}}
+    </div>
+
+    <div class="col-md-4">
+        {% if not perms.projects.change_project and user in project.participants.all%}
+        <div class="alert alert-info" role="alert">
+          <h5 class="alert-heading">Tu n'as pas les droits pour éditer ce projet.</h5>
+          <p>C'est probablement parce que tu n'as pas le statut de membre régulier :(</p>
+        </div>
+        {% endif %}
+    -->
+        {% if project.picture %}
+        <img src="{{material.picture.url}}" class="img-thumbnail">
+        {% endif %}
+    </div>
+
+
+</div>
+{% endblock %}

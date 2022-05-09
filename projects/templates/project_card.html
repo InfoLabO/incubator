@@ -1,6 +1,6 @@
 <div class="col-sm-6 col-md-3">
   <div class="card">
-    <a href="{% url "view_project" project.id %}">
+    <a href="{% url 'view_project' project.id %}">
       {% if not project.picture %}
       <img class="card-img-top p-1" src="/static/img/default-project.png"
         style="height: 15em; width:100%; object-fit: cover;">
