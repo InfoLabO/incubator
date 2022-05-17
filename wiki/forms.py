@@ -1,7 +1,7 @@
 from django.forms import ModelForm, Textarea
 
-from .models import Article
 
+from .models import Article
 
 class ArticleForm(ModelForm):
     class Meta:
@@ -12,3 +12,4 @@ class ArticleForm(ModelForm):
             'content': Textarea(attrs={'rows': 20}),
             'commit': Textarea(attrs={'rows': 3}),
         }
+

@@ -1,0 +1,31 @@
+<h2>
+  <span class="fa fa-calendar-o" aria-hidden="true"></span>
+  Wiki
+</h2>
+<p>Quelques articles disponibles sur notre wiki: </p>
+
+<div class={% if not user.is_authenticated %}"col-md-9"{% else %}""{% endif %}>
+  {% if articles %}
+  {% for article in articles %}
+  {% load formatting %}
+        <div class="row" >
+          <div class="col-xs-10 w-90 p-3 ">
+            <div class="card border-dark w-100 p-3">
+              <div class="card-header">{{ article.title }}</div>
+              <div class="card-body text-dark">
+                <h5 class="card-title">{{ article.title }}</h5>
+                <p class="card-text" >
+                    <span class="text-break" style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 3; /* number of lines to show */-webkit-box-orient: vertical;">
+                    {{ article.content }}
+                    </span >
+                </p>
+                <a href="#" class="btn btn-primary">Consulter article</a>
+              </div>
+            </div>
+          </div>
+        </div>
+  {% endfor %}
+  {% else %}
+  <p class="text-muted">Il n'y a actuellement pas d'évènements à venir</p>
+  {% endif %}
+</div>

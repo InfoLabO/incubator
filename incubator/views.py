@@ -12,6 +12,8 @@ from realtime.helpers import feed_reducer
 
 from constance import config as dyn_config
 
+from wiki.models import Article
+
 
 def error_view(code, msg=""):
     def view(request, exception=""):
@@ -33,9 +35,8 @@ def home(request):
         "space_open": space_is_open(client),
         "message": dyn_config.HOMEPAGE_MESSAGE,
         "message_type": dyn_config.HOMEPAGE_MESSAGE_TYPE,
-        "events": Event.objects.filter(stop__gt=timezone.now(), status__exact="r"),
+        "articles": Article.objects.all().filter(is_feeding_home_page=True),
         "stream": stream,
-        "event_page": False,
     })
 
 

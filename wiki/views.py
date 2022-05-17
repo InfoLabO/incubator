@@ -14,18 +14,23 @@ def wiki_home(request):
 
     return render(request, "wiki_home.html", {
         'project': articles.filter(category="p"),
-        'food': articles.filter(category="n"),
+        'materials': articles.filter(category="m"),
+        'experiences': articles.filter(category="e"),
         'miscellaneous': articles.filter(category="d"),
-        'objects': articles.filter(category="o"),
         'hackerspace': articles.filter(category="h"),
     })
-
 
 class ArticleAddView(LoginRequiredMixin, CreateView):
     form_class = ArticleForm
     template_name = 'add_article.html'
     login_url = '/auth/login/'
     redirect_field_name = 'redirect_to'
+
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(self.form_class)
+        if not self.request.user.is_superuser:
+            form.fields.pop('is_feeding_home_page')
+        return form
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
@@ -42,6 +47,12 @@ class ArticleEditView(LoginRequiredMixin, UpdateView):
     template_name = 'add_article.html'
     login_url = '/auth/login/'
     redirect_field_name = 'redirect_to'
+
+    def get_form(self, *args, **kwargs):
+        form = super().get_form(self.form_class)
+        if not self.request.user.is_superuser:
+            form.fields.pop('is_feeding_home_page')
+        return form
 
     def form_valid(self, form):
         form.instance.last_modifier = self.request.user.get_username()

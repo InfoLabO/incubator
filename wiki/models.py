@@ -9,9 +9,9 @@ User = settings.AUTH_USER_MODEL
 
 CATEGORY = (
     ("p", "Projets"),
-    ("n", "Nourriture"),
+    ("m", "Matériels"),
+    ("e", "Expérience & conseils"),
     ("d", "Divers"),
-    ("o", "Objets"),
     ("h", "Hackerspace")
 )
 
@@ -27,6 +27,7 @@ class Article(models.Model):
     commit = models.TextField(verbose_name="commit", blank=True)
     category = models.CharField(max_length=1, choices=CATEGORY)
     hidden = models.BooleanField(default=False, verbose_name="Caché")
+    is_feeding_home_page = models.BooleanField(default=False, verbose_name="Visible sur la page d'accueil du site")
 
     class Meta:
         verbose_name = "Article"
