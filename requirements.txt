@@ -28,7 +28,7 @@ django==3.2.10
     # via
     #   -r requirements.in
     #   django-bootstrap4
-    #   django--ckeditor
+    #   django-ckeditor
     #   django-classy-tags
     #   django-extensions
     #   django-filter

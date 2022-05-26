@@ -328,17 +328,6 @@ CKEDITOR_CONFIGS = {
  [ 'Source', '-'],
  ['Undo', 'Redo','-','Maximize'],
 ],
-    },
-    'comment_section':{
-        'width': '100%',
-        'toolbar' : 'Special',
-        'toolbar_Special':[
-            ['Bold', 'Italic', 'Underline'],
-            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-            ['Smiley', 'sourcearea', 'SpecialChar'],
-            ['Undo', 'Redo'],
-
-        ]
     }
 }
 

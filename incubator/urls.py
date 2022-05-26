@@ -17,7 +17,6 @@ urlpatterns = [
     path('space/', include('space.urls')),
     path('wiki/', include('wiki.urls')),
     path('streams/', include('streams.urls')),
-    path('materials/', include('materials.urls')),
     path('storage/', include('storage.urls')),
     path('admin/', admin.site.urls),
     path('auth/reset/done/', incubator.views.password_reset_done),
