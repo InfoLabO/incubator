@@ -72,7 +72,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=127, blank=True)
     hide_pamela = models.BooleanField(default=False, verbose_name='caché sur pamela')
     is_active = models.BooleanField(default=True, verbose_name='Utilisateur actif')
-    is_email_verified = models.BooleanField(default=False)
     # , widget=forms.Textarea(attrs={'placeholder': 'Ajouter une description', 'style':'resize:none;'}))
 
     def get_short_name(self):
