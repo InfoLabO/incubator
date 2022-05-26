@@ -1,39 +1,40 @@
+from urllib import request
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from rest_framework import viewsets
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from django.views.decorators.http import require_POST
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
 from django.views.generic import UpdateView
 from django.urls import reverse
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
-from django.contrib.admin.views.decorators import staff_member_required
-from django.conf import settings
-from django.db.models import F, Count
-from django.db import transaction
-
 from users.forms import UserCreationForm
-
 from .serializers import UserSerializer
 from .models import User
-from .forms import UserForm, SpendForm, TopForm, TransferForm, ProductBuyForm, ChangePasswordForm, AdminChangePasswordForm
-from .decorators import permission_required
-from stock.models import Product, TransferTransaction, TopupTransaction, ProductTransaction, MiscTransaction
+from .forms import UserForm, ChangePasswordForm, AdminChangePasswordForm
+from .tokens import account_activation_token
 
 
-def balance(request):
-    favorites = Product.objects.filter(producttransaction__user=request.user).annotate(
-        Count("producttransaction")).order_by("-producttransaction__count")[:5]
-    return render(request, 'balance.html', {
-        'account': settings.BANK_ACCOUNT,
-        'products': Product.objects.order_by('category', 'name'),
-        'favorites': favorites,
-        'topForm': TopForm(),
-        'spendForm': SpendForm(),
-        'transferForm': TransferForm(),
+"""def send_activate_email(user, request):
+    current_site = get_current_site(request)
+    email_subject = 'Activez votre compte'
+    email_body = render_to_string('activate.html',{
+        'user':user,
+        'domain':current_site,
+        'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+        'token':generate_token.make_token(user)
     })
+
+    email=EmailMessage(subject=email_subject,body=email_body,
+                 from_email=settings.EMAIL_FROM_USER,to=[user.email])
+    email.send()
+"""
 
 
 @require_POST
@@ -42,6 +43,7 @@ def login_view(request):
     password = request.POST.get("password", "")
 
     user = authenticate(request, username=username, password=password)
+
     if user is not None:
         login(request, user)
         next = request.GET.get("next", "/")
@@ -50,129 +52,6 @@ def login_view(request):
     else:
         messages.error(request, "Aucun compte correspondant à cet identifiant n'a été trouvé")
         return HttpResponseRedirect(request.META["HTTP_REFERER"])
-
-
-@permission_required('users.change_balance')
-@require_POST
-def buy_product(request):
-    if request.method == 'POST':
-        form = ProductBuyForm(request.POST)
-        if form.is_valid():
-            product = form.cleaned_data["product"]
-            price = product.price
-
-            with transaction.atomic():
-                request.user.balance = F('balance') - price
-                request.user.save()
-
-                product_transaction = ProductTransaction(user=request.user, product=product)
-                product_transaction.save()
-
-            messages.success(request, 'Vous avez bien dépensé {}€ ({})'.format(price, product.name))
-        else:
-            messages.error(request, "Erreur, votre dépense n'a pas été enregistrée")
-
-    return HttpResponseRedirect(reverse('change_balance'))
-
-
-@permission_required('users.change_balance')
-@require_POST
-def spend(request):
-    if request.method == 'POST':
-        form = SpendForm(request.POST)
-        if form.is_valid():
-            sumchanged = form.cleaned_data['value']
-            name = form.cleaned_data['name']
-
-            with transaction.atomic():
-                request.user.balance = F('balance') - sumchanged
-                request.user.save()
-
-                misc_transaction = MiscTransaction(user=request.user, info=name, amount=sumchanged)
-                misc_transaction.save()
-
-            messages.success(request, 'Vous avez bien dépensé {}€ ({})'.format(sumchanged, name))
-        else:
-            messages.error(request, "Erreur, votre dépense n'a pas été enregistrée")
-
-    return HttpResponseRedirect(reverse('change_balance'))
-
-
-@permission_required('users.change_balance')
-@require_POST
-def top(request):
-    if request.method == 'POST':
-        form = TopForm(request.POST)
-        if form.is_valid():
-            sumchanged = form.cleaned_data['value']
-
-            with transaction.atomic():
-                request.user.balance = F('balance') + sumchanged
-                request.user.save()
-
-                top_type = form.cleaned_data['location']
-
-                topup_transaction = TopupTransaction(user=request.user, topup_type=top_type, amount=sumchanged)
-                topup_transaction.save()
-
-            messages.success(request, 'Vous avez bien rechargé {}€ ({})'.format(sumchanged, top_type))
-        else:
-            messages.error(request, "Erreur, votre recharge n'a pas été enregistrée")
-
-    return HttpResponseRedirect(reverse('change_balance'))
-
-
-@staff_member_required
-def send_debt_mail(request):
-    users = User.objects.filter(balance__lt=0)
-
-    content = """Bonjour {} !
-Le Urlab Banking System a détecté une dette de ta part d'un montant de {}€ :O ! N'oublie pas de t'en défaire au plus vite avant que nos avocats ne te tombent dessus !
-
-Note : Il peut s'agir d'une erreur ! Ayant eu un soucis lié à notre base de données dans le courant de l'année 2020, il se peut que ta dette ait déjà été réglée, si c'est le cas, n'hésite pas à nous contacter (contact@urlab.be).
-"""
-
-    for user in users:
-        message = EmailMultiAlternatives(
-            subject="Votre ardoise @UrLab",
-            body=content.format(user.username, abs(user.balance)),
-            from_email='Trésorerie UrLab <tresorier@urlab.be>',
-            to=user.email
-        )
-        message.send()
-
-    return HttpResponseRedirect(request.META.get("HTTP_REFERER", "/"))
-
-
-@permission_required('users.change_balance')
-@require_POST
-def transfer(request):
-    if request.method == 'POST':
-        form = TransferForm(request.POST)
-        if form.is_valid():
-            sumchanged = form.cleaned_data['value']
-            otheruser = form.cleaned_data['recipient']
-            if otheruser != request.user:
-
-                with transaction.atomic():
-                    request.user.balance = F('balance') - sumchanged
-                    otheruser.balance = F('balance') + sumchanged
-                    request.user.save()
-                    otheruser.save()
-
-                    transfer_transaction = TransferTransaction(user=request.user, receiver=otheruser, amount=sumchanged)
-                    transfer_transaction.save()
-
-                messages.success(
-                    request,
-                    'Vous avez bien transféré {}€ à {}'.format(sumchanged, otheruser.username)
-                )
-            else:
-                messages.error(request, "Vous ne pouvez pas vous transférer de l'argent à vous même")
-        else:
-            messages.error(request, "Erreur, votre transfert n'a pas été enregistré")
-
-    return HttpResponseRedirect(reverse('change_balance'))
 
 
 def show_pamela(request):
@@ -283,20 +162,61 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
-class RegisterView(CreateView):
-    template_name = 'registration/register.html'
-    form_class = UserCreationForm
-    success_url = '/'
+def RegisterView(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            current_site = HttpRequest.get_host(self=request)
+            email_subject = 'Activez votre compte'
+            message = render_to_string('activate.html', {
+                'user': user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).encode().decode(),
+                'token': account_activation_token.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                email_subject, message, 'contact@infolabo.fr',
+                [to_email]
+            )
+            email.send()
+            return HttpResponse('Please confirm your email address to complete the registration')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
 
-    def get_initial(self):
-        initial = super(RegisterView, self).get_initial()
-        initial = initial.copy()
-        initial['username'] = self.request.GET.get("username")
-        return initial
 
-    def form_valid(self, form):
-        ret = super(RegisterView, self).form_valid(form)
-        user = form.auth_user()
-        if user:
-            login(self.request, user)
-        return ret
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+        return redirect(reverse('login'))
+    else:
+        return HttpResponse("Le lien d'activation n'est pas valide !")
+
+
+"""def activate_user(request,uidb64,token):
+
+    try:
+        uid=force_text(urlsafe_base64_encode(uidb64))
+        user=User.objects.get(pk=uid)
+    except Exception as e:
+        user=None
+
+    if user and generate_token.check_token(user,token):
+        user.is_email_verified=True
+        user.save()
+        messages.add_message(request,messages.SUCCESS,'Email vérifié avec succès, vous pouvez maintenant vous connecté')
+        return redirect(reverse('login_view'))
+
+    return render(request,'activate_failed.html',{'user':})"""

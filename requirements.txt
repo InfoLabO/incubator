@@ -176,6 +176,27 @@ wheel==0.37.0
 wiki==0.7.7
     # via -r requirements.in
 
+django_email_verification
+
 # The following packages are considered to be unsafe in a requirements file:
 # pip
 # setuptools
+
+py~=1.10.0
+pip~=22.1
+attrs~=20.3.0
+pytest~=6.2.5
+isort~=5.9.3
+setuptools~=60.2.0
+flake8~=4.0.1
+pyflakes~=2.4.0
+pylint~=2.11.1
+astroid~=2.8.0
+platformdirs~=2.3.0
+mccabe~=0.6.1
+pluggy~=0.13.1
+iniconfig~=1.1.1
+wrapt~=1.12.1
+PyJWT~=2.4.0
+
+jwt

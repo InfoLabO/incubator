@@ -1,83 +1,40 @@
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import authenticate
-
 from django import forms
 from .models import User
-from stock.models import Product
-
-
-class UserDescriptionForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ["description", ]
-
-
-class TolerantDecimalField(forms.DecimalField):
-    def clean(self, value):
-        value = value.replace(',', '.')
-        return super(TolerantDecimalField, self).clean(value)
-
-
-class BalanceForm(forms.Form):
-    value = TolerantDecimalField(
-        label="Montant",
-        max_digits=6,
-        decimal_places=2,
-        min_value=0,
-        max_value=500
-    )
-
-
-class TopForm(BalanceForm):
-    location = forms.ChoiceField(
-        choices=[
-            ('BANK', "Virement"),
-            ('CASH', "Caisse"),
-        ],
-        widget=forms.RadioSelect,
-    )
-
-
-class SpendForm(BalanceForm):
-    name = forms.CharField(
-        max_length=100,
-        label="Nom du produit",
-    )
-
-
-class ProductBuyForm(forms.Form):
-    product = forms.ModelChoiceField(queryset=Product.objects.all())
-
-
-class TransferForm(BalanceForm):
-    recipient = forms.ModelChoiceField(
-        queryset=User.objects.order_by('username'),
-    )
 
 
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'newsletter', 'description']
+        fields = ['first_name', 'last_name', 'email', 'username', ]
 
 
 class UserCreationForm(forms.ModelForm):
     error_messages = {
-        'password_mismatch': _("The two password fields didn't match."),
+        'password_mismatch': _("Mot de passe différent."),
     }
     password1 = forms.CharField(
-        label=_("Password"),
+        label=_("Mot de passe"),
         widget=forms.PasswordInput
     )
     password2 = forms.CharField(
-        label=_("Password confirmation"),
+        label=_("Confirmer mot de passe"),
         widget=forms.PasswordInput,
-        help_text=_("Enter the same password as above, for verification.")
     )
+    first_name = forms.CharField(
+        label=_("Prénom"),
+    )
+
+    last_name = forms.CharField(
+        label=_("Nom"),
+    )
+
+    email = forms.EmailField(max_length=200)
 
     class Meta:
         model = User
-        fields = ("username", "email")
+        fields = ("username","first_name", "last_name", "email", "password1", "password2")
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -107,17 +64,16 @@ class UserCreationForm(forms.ModelForm):
 
 class ChangePasswordForm(forms.Form):
     old_password = forms.CharField(
-        label=_("Old Password"),
+        label=_("Ancien mot de passe"),
         widget=forms.PasswordInput
     )
     new_password = forms.CharField(
-        label=_("New Password"),
+        label=_("Nouveau mot de passe"),
         widget=forms.PasswordInput
     )
     new_password2 = forms.CharField(
-        label=_("New Password confirmation"),
+        label=_("Confirmer nouveau mot de passe"),
         widget=forms.PasswordInput,
-        help_text=_("Enter the same password as above, for verification.")
     )
 
     def clean(self):
@@ -132,13 +88,12 @@ class ChangePasswordForm(forms.Form):
 class AdminChangePasswordForm(forms.Form):
 
     new_password = forms.CharField(
-        label=_("New Password"),
+        label=_("Nouveau mot de passe"),
         widget=forms.PasswordInput
     )
     new_password2 = forms.CharField(
-        label=_("New Password confirmation"),
+        label=_("Confirmer nouveau mot de passe"),
         widget=forms.PasswordInput,
-        help_text=_("Enter the same password as above, for verification.")
     )
 
     def clean(self):
