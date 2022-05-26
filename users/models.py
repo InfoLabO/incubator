@@ -1,13 +1,10 @@
 import hashlib
-
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
 from django.urls import reverse
 from django.core.exceptions import ValidationError
-
-
 from incubator.models import ASBLYear
 
 # Create your models here.
@@ -57,9 +54,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'Utilisateur'
         ordering = ['username']
-        permissions = (
-            ("change_balance", "Peut modifier son ardoise"),
-        )
 
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ['email']
@@ -76,14 +70,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     edited = models.DateTimeField(auto_now=True)
     first_name = models.CharField(max_length=127, blank=True)
     last_name = models.CharField(max_length=127, blank=True)
-
-    balance = models.DecimalField(max_digits=6, decimal_places=2, default=0, verbose_name="ardoise")
-    has_key = models.BooleanField(default=False, verbose_name="possède une clé")
-
     hide_pamela = models.BooleanField(default=False, verbose_name='caché sur pamela')
-    newsletter = models.BooleanField(default=True, verbose_name='abonné à la newsletter')
     is_active = models.BooleanField(default=True, verbose_name='Utilisateur actif')
-    description = models.TextField(default="", verbose_name="Description", max_length=255, null=True)
+    is_email_verified = models.BooleanField(default=False)
     # , widget=forms.Textarea(attrs={'placeholder': 'Ajouter une description', 'style':'resize:none;'}))
 
     def get_short_name(self):
@@ -100,10 +89,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_member(self):
         year = ASBLYear.objects.filter(start__gte=timezone.now(), stop__lt=timezone.now())
         return self.membership_set.filter(asbl_year=year).count() > 0
-
-    @property
-    def absolute_balance(self):
-        return abs(self.balance)
 
     @property
     def gravatar(self):

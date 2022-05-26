@@ -22,40 +22,6 @@ class MembershipInline(admin.TabularInline):
     extra = 1
 
 
-class BalanceListFilter(admin.SimpleListFilter):
-    title = "Ardoise"
-    parameter_name = 'balance'
-
-    def lookups(self, request, model_admin):
-        return (
-            ('debt', "Moins de -5€"),
-            ('neg5', "[-5€, 0€["),
-            ('z', '0€'),
-            ('pos5', "]0€, 5€]"),
-            ('money', "Plus de 5€"),
-        )
-
-    def queryset(self, request, queryset):
-        if self.value() == 'debt':
-            return queryset.filter(balance__lt=-5)
-        if self.value() == 'neg5':
-            return queryset.filter(
-                balance__gte=-5,
-                balance__lt=0,
-            )
-
-        if self.value() == 'z':
-            return queryset.filter(balance=0)
-
-        if self.value() == 'pos5':
-            return queryset.filter(
-                balance__gt=0,
-                balance__lte=5,
-            )
-        if self.value() == 'money':
-            return queryset.filter(balance__gt=5)
-
-
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     def groups(self, user):
@@ -93,8 +59,8 @@ class UserAdmin(admin.ModelAdmin):
             Membership.objects.create(user=user, asbl_year=asbl_year)
     make_member.short_description = "Rendre membre pour l'année en cours"
 
-    list_display = ('username', 'balance', 'email', 'has_key', 'is_superuser', 'newsletter', 'created', 'groups', 'is_member')
-    list_filter = (BalanceListFilter, 'has_key', 'is_superuser', 'created', 'last_login')
+    list_display = ('username', 'email', 'is_superuser', 'created', 'groups', 'is_member')
+    list_filter = ('is_superuser', 'created', 'last_login')
     search_fields = ('username', 'email', 'first_name', 'last_name')
     actions = [make_member]
 
@@ -107,8 +73,7 @@ class UserAdmin(admin.ModelAdmin):
             'fields': (
                 ('username', 'email'),
                 ('first_name', 'last_name'),
-                ('has_key', 'hide_pamela', 'newsletter'),
-                'balance'
+                ('hide_pamela',),
             )
         }),
         (None, {

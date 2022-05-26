@@ -59,3 +59,5 @@ toml==0.10.2
     #   pytest
 wrapt==1.12.1
     # via astroid
+
+jwt

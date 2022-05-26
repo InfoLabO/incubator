@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 import re
 import sentry_sdk
+from django.conf.global_settings import EMAIL_USE_SSL, EMAIL_TIMEOUT, EMAIL_SSL_KEYFILE, EMAIL_SSL_CERTFILE, EMAIL_HOST, \
+    EMAIL_PORT, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_USE_TLS
 
 from django.contrib.messages import constants as messages
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -63,12 +65,9 @@ INSTALLED_APPS = (
     "constance.backends.database",
     "simple_history",
     "incubator",
-    "events",
     "users",
     "projects",
-    "badges",
     "space",
-    "stock",
     "streams",
     "django_nyt",
     "mptt",
@@ -80,7 +79,8 @@ INSTALLED_APPS = (
     "actstream",
     "manmail",
     "redir",
-    "materials"
+    "materials",
+    "storage",
 )
 
 MIDDLEWARE = (
@@ -137,10 +137,9 @@ STATIC_URL = "/static/"
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 STATIC_ROOT = os.path.join(BASE_DIR, "collected_static/")
-
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
 MEDIA_URL = "/media/"
+DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 
 TEMPLATES = [
     {
@@ -314,8 +313,11 @@ MAC_RANGES = EXPRESSIF_RANGES + VMWARE_RANGES + OTHER_RANGES
 
 IGNORE_LIST_RE = [re.compile(prefix + r"(:[0-9a-f]{2}){3}") for prefix in MAC_RANGES]
 
-EMAIL_HOST = os.environ.get("EMAIL_HOST", "localhost")
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'soumaha745@gmail.com'
+EMAIL_HOST_PASSWORD = 'Conakry2001!'  # os.environ['password_key'] suggested
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
-EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 25))
 
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "contact@urlab.be")
+

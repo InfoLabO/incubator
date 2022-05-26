@@ -7,7 +7,6 @@ from django.contrib import messages
 from django.urls import reverse
 
 from space.fakeredis import get_redis, space_is_open
-from events.models import Event
 from realtime.helpers import feed_reducer
 
 from constance import config as dyn_config
@@ -33,7 +32,6 @@ def home(request):
         "space_open": space_is_open(client),
         "message": dyn_config.HOMEPAGE_MESSAGE,
         "message_type": dyn_config.HOMEPAGE_MESSAGE_TYPE,
-        "events": Event.objects.filter(stop__gt=timezone.now(), status__exact="r"),
         "stream": stream,
         "event_page": False,
     })
