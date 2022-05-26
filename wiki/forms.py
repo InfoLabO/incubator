@@ -10,6 +10,6 @@ class ArticleForm(ModelForm):
 
         widgets = {
             'content': Textarea(attrs={'rows': 20}),
-            'commit': Textarea(attrs={'rows': 3}),
+            'summary': Textarea(attrs={'rows': 7}),
         }
 

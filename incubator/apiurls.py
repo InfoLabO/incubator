@@ -6,13 +6,14 @@ import users.views
 import projects.views
 import stock.views
 import space.views
-
+import wiki.views
 
 api = routers.DefaultRouter()
 api.register(r'events', events.views.EventViewSet)
 api.register(r'meetings', events.views.MeetingViewSet)
 api.register(r'users', users.views.UserViewSet)
 api.register(r'projects', projects.views.ProjectViewSet)
+api.register(r'articles', wiki.views.ArticleViewSet)
 api.register(r'stock/categories', stock.views.CategoryViewSet)
 api.register(r'stock/products', stock.views.ProductViewSet)
 api.register(r'space/openings', space.views.OpeningsViewSet)

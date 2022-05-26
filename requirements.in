@@ -5,6 +5,7 @@ django>=3
 djangorestframework
 django-activity-stream
 django-bootstrap4
+django--ckeditor
 django-constance[database]
 django-crispy-forms
 django-extensions
@@ -17,6 +18,7 @@ wiki
 django-jsonfield # see https://django-activity-stream.readthedocs.io/en/latest/installation.html#add-extra-data-to-actions
 django-jsonfield-compat
 django-resized
+
 
 # Tooling
 influxdb

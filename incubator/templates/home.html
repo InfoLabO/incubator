@@ -21,9 +21,7 @@
             {% endif %}
 
             {% if request.user.is_authenticated %}
-                <h1>INFOLABO</h1>
-                <p>Les dernières nouvelles de mon hackerspace préféré.</p>
-                {% include "home_feed.html" %}
+                {% include "wiki.html" %}
             {% else %}
 
             <h1>
@@ -47,17 +45,21 @@
                 <li>L’organisation régulière de conférences et de présentations liées à l'informatique et à la technologie en général.</li>
             </ul>
             </p>
-            <div class="row">
+                <br>
+                <hr style="width: 70%;">
+                                <br>
+
                 {% include "wiki.html" %}
-            </div>
+
         {% endif %}
         </div>
         {% if request.user.is_authenticated %}
             <div class="col-md-4">
                 <div class="row">
-                    {% include "wiki.html" %}
+                    {% include "home_feed.html" %}
                 </div>
                 <div class="row">
+                    <hr>
                     {% include "map.html" %}
                 </div>
             </div>

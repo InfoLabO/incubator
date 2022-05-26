@@ -36,6 +36,7 @@ urlpatterns = [
     path('api/', include('incubator.apiurls')),
     path('notifications/', include('django_nyt.urls')),
     path('r/<slug:short_name>', redir.views.short_url, name='redirection'),
+    path('ckeditor', include('ckeditor_uploader.urls')),
 
 ]
 

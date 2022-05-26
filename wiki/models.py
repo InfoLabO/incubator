@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.urls import reverse
 from simple_history.models import HistoricalRecords
+from ckeditor_uploader.fields import RichTextUploadingField
 # from datetime import datetime
 # from projects.models import Project
 
@@ -22,9 +23,9 @@ class Article(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     last_modifier = models.CharField(max_length=50, default="")
     last_modified = models.DateTimeField(auto_now=True)
-    content = models.TextField(verbose_name="Contenu", blank=True)
+    summary = models.TextField(verbose_name="Résumé",default="Aucun résumé n'est disponible pour cet article")
+    content = RichTextUploadingField(null=True, blank=True)
     history = HistoricalRecords()
-    commit = models.TextField(verbose_name="commit", blank=True)
     category = models.CharField(max_length=1, choices=CATEGORY)
     hidden = models.BooleanField(default=False, verbose_name="Caché")
     is_feeding_home_page = models.BooleanField(default=False, verbose_name="Visible sur la page d'accueil du site")

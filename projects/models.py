@@ -4,6 +4,7 @@ from django.core.validators import MaxValueValidator
 from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
+from ckeditor_uploader.fields import RichTextUploadingField
 from django_resized import ResizedImageField
 
 
@@ -42,7 +43,7 @@ class Project(models.Model):
         size=[500, 500], crop=['middle', 'center'], quality=100, upload_to='project_pictures', null=True, blank=True)
 
     short_description = models.CharField(max_length=1000, verbose_name="Description courte")
-    content = models.TextField(verbose_name="Contenu", blank=True)
+    content = RichTextUploadingField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Projet"

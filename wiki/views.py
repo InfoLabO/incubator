@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from rest_framework import viewsets
 from django.views.generic.detail import DetailView
 from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils import timezone
 from actstream import action
 
+from .serializers import ArticleSerializer
 from .models import Article
 from .forms import ArticleForm
 
@@ -73,3 +75,7 @@ class ArticleOldDetailView(DetailView):
     model = Article.history.model
     template_name = 'article_old_detail.html'
     context_object_name = 'article'
+
+class ArticleViewSet(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer

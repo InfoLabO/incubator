@@ -135,11 +135,37 @@ h1 small{
 .event-card [data-toggle="collapse"]{
   color: grey;
 }
-.text-trunc{
-   overflow: hidden;
-   text-overflow: ellipsis;
-   display: -webkit-box;
-   -webkit-line-clamp: 3; /* number of lines to show */
-   -webkit-box-orient: vertical;
-
+.scroll {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 400px;
+    padding-top: 0 ;
+    margin: inherit;
 }
+.scroll::-webkit-scrollbar {
+    width: 4px;
+    background-color: #dfe5e8;
+}
+.scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #7d97a5;
+}
+.django-ckeditor-widget{
+    display: flex !important;
+}
+.card-body{overflow: hidden;}
+
+.wiki_link,.wiki_link:hover,.wiki_link:focus,.wiki_link:active{
+    text-decoration: none;
+    color: inherit;
+}
+.wiki_link:hover h4 { color: #007bff; }
+
+.vr{
+    width: 1px;
+    height: 90%;
+    margin-top: 60px;
+    border-left: 1px dotted #0f0f0f;
+}
+

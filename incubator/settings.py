@@ -80,9 +80,12 @@ INSTALLED_APPS = (
     "actstream",
     "manmail",
     "redir",
+    "ckeditor",
+    "ckeditor_uploader",
     "materials"
 )
 
+CKEDITOR_UPLOAD_PATH = "uploads/"
 MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -309,6 +312,35 @@ OTHER_RANGES = [
     "00:15:5D",  # Hyper-V
     "b8:27:eb",  # Raspberry-Pi
 ]
+CKEDITOR_CONFIGS = {
+    'default': {
+        'width': '100%',
+ "removePlugins": "stylesheetparser",
+ 'allowedContent': True,
+ 'toolbar_Full': [
+ ['Styles', 'Format', 'Bold', 'Italic', 'Underline'],
+ ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+ ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+ ['Image', 'Flash', 'Table', 'HorizontalRule'],
+ ['TextColor', 'BGColor'],
+ ['Smiley','sourcearea', 'SpecialChar'],
+ [ 'Link', 'Unlink', 'Anchor' ],
+ [ 'Source', '-'],
+ ['Undo', 'Redo','-','Maximize'],
+],
+    },
+    'comment_section':{
+        'width': '100%',
+        'toolbar' : 'Special',
+        'toolbar_Special':[
+            ['Bold', 'Italic', 'Underline'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Smiley', 'sourcearea', 'SpecialChar'],
+            ['Undo', 'Redo'],
+
+        ]
+    }
+}
 
 MAC_RANGES = EXPRESSIF_RANGES + VMWARE_RANGES + OTHER_RANGES
 

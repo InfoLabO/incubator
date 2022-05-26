@@ -28,6 +28,7 @@ django==3.2.10
     # via
     #   -r requirements.in
     #   django-bootstrap4
+    #   django--ckeditor
     #   django-classy-tags
     #   django-extensions
     #   django-filter
@@ -41,6 +42,8 @@ django==3.2.10
 django-activity-stream==0.10.0
     # via -r requirements.in
 django-bootstrap4==3.0.1
+    # via -r requirements.in
+django-ckeditor==6.4.0
     # via -r requirements.in
 django-classy-tags==2.0.0
     # via django-sekizai
