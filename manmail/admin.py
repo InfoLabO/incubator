@@ -6,7 +6,6 @@ from django.conf import settings
 from .models import Email
 from users.models import User
 
-"""
 @admin.register(Email)
 class EmailAdmin(admin.ModelAdmin):
     list_display = ('subject', 'sent', 'created', 'modified', 'get_approvers', 'is_sendable')
@@ -89,4 +88,4 @@ class EmailAdmin(admin.ModelAdmin):
 
         self.message_user(request, "L'email a été énvoyé à votre adresse")
     send_test_email.short_description = "Envoyer cet email A MOI UNIQUEMENT"
-    """
+
