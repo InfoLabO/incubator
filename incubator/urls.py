@@ -11,12 +11,11 @@ import space.views
 
 urlpatterns = [
     path('', incubator.views.home, name='home'),
-    path('spaceapi.json', space.views.spaceapi, name="spaceapi"),
+    #path('spaceapi.json', space.views.spaceapi, name="spaceapi"),
     path('projects/', include('projects.urls')),
     path('accounts/', include('users.urls')),
     path('space/', include('space.urls')),
     path('wiki/', include('wiki.urls')),
-    path('streams/', include('streams.urls')),
     path('storage/', include('storage.urls')),
     path('admin/', admin.site.urls),
     path('auth/reset/done/', incubator.views.password_reset_done),
@@ -25,13 +24,13 @@ urlpatterns = [
     path('notifications/', include('django_nyt.urls')),
     path('r/<slug:short_name>', redir.views.short_url, name='redirection'),
     path('ckeditor', include('ckeditor_uploader.urls')),
+    path('mail', include('manmail.urls')),
 
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     from django.conf.urls.static import static
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 
 handler400 = incubator.views.error_view(400, "Impossible de traiter cette requête")
 handler403 = incubator.views.error_view(403, "Tu n'as pas la permission de faire ça")

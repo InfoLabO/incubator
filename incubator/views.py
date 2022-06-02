@@ -1,5 +1,4 @@
-# from datetime import datetime
-from django.utils import timezone
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from actstream.models import Action
@@ -14,7 +13,7 @@ from constance import config as dyn_config
 from wiki.models import Article
 
 
-def error_view(code, msg=""):
+def error_view(code, msg):
     def view(request, exception=""):
         response = render(request, "error.html", {'code': code, 'message': msg})
         response.status_code = code
@@ -46,3 +45,5 @@ def password_reset_done(request):
     )
 
     return HttpResponseRedirect(reverse('home'))
+
+

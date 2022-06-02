@@ -2,10 +2,8 @@ from django.db import models
 from incubator import settings
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-# from datetime import datetime
 import re
 import uuid
-from urllib.parse import urlparse, parse_qs
 
 MAC_REGEX = re.compile(r'([a-f0-9]{2}:){5}[a-f0-9]{2}')
 
@@ -39,36 +37,6 @@ class SpaceStatus(models.Model):
     class Meta:
         verbose_name = "État d'ouverture du Hackerspace"
         verbose_name_plural = "États d'ouverture du Hackerspace"
-
-
-class MusicOfTheDay(models.Model):
-    url = models.URLField()
-    irc_nick = models.CharField(max_length=200)
-    day = models.DateField(auto_now_add=True, unique=True)
-
-    KNOWN_PROVIDERS = {
-        "www.youtube.com": "youtube",
-        "youtu.be": "youtube",
-        "soundcloud.com": "soundcloud",
-    }
-
-    class Meta:
-        verbose_name_plural = "Musics of the day"
-
-    def provider(self):
-        url = urlparse(self.url)
-        return self.KNOWN_PROVIDERS.get(url.netloc)
-
-    def provider_id(self):
-        url = urlparse(self.url)
-        if url.netloc == "www.youtube.com":
-            if not url.path == "/watch":
-                print(url.path)
-                return None
-            qs = parse_qs(url.query)
-            return qs.get("v", [None])[0]
-        elif url.netloc == "youtu.be":
-            return url.path[1:]
 
 
 class PrivateAPIKey(models.Model):

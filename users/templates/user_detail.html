@@ -9,7 +9,7 @@ Profil de {{user.username}}
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">UrLab</a></li>
+        <li class="breadcrumb-item"><a href="/">InfoLabo</a></li>
         <li class="breadcrumb-item">Membres</li>
         <li class="breadcrumb-item active" aria-current="page">{{user.username}}</li>
     </ol>
@@ -17,7 +17,11 @@ Profil de {{user.username}}
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
     <h1>
-        {{user.username}}
+        {% if not user.avatar %}
+            <img src="/static/img/pp_defaut.jpg" width="200"/>
+        {% else %}
+            <img src="/static/img/{{userr.avatar}}" width="200"/>
+        {% endif %}
         {% if request.user == user %}
             <a href="{% url 'user_edit' %}" class="btn btn-primary">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
@@ -174,6 +178,9 @@ Profil de {{user.username}}
                 </table>
                 </p>
             </div>
+        </div>
+        <div>
+             <a href="{% url 'delete' %}" class="btn btn-danger pull-right" onclick="return confirm('Êtes vous sûre de vouloir supprimer votre compte');" >Supprimer mon compte</a>
         </div>
     </div>
 </div>

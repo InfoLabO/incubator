@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib.auth.admin import UserAdmin
 from django.utils.safestring import mark_safe
 from django.contrib import admin
 from django.contrib import auth
@@ -23,7 +24,7 @@ class MembershipInline(admin.TabularInline):
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(UserAdmin):
     def groups(self, user):
         short_name = str
         p = sorted(
@@ -34,7 +35,7 @@ class UserAdmin(admin.ModelAdmin):
         value = ', '.join(p)
         return mark_safe("%s" % value)
     groups.allow_tags = True
-    groups.short_description = u'Membre des groupes'
+    groups.short_description = 'Membre des groupes'
 
     def change_password(self, user):
         url = reverse("admin_change_passwd", args=(user.id,))
@@ -59,8 +60,8 @@ class UserAdmin(admin.ModelAdmin):
             Membership.objects.create(user=user, asbl_year=asbl_year)
     make_member.short_description = "Rendre membre pour l'année en cours"
 
-    list_display = ('username', 'email', 'is_superuser', 'created', 'groups', 'is_member')
-    list_filter = ('is_superuser', 'created', 'last_login')
+    list_display = ('username', 'email', 'is_superuser', 'created', 'groups', 'is_active')
+    list_filter = ('is_superuser', 'created', 'last_login', 'username',)
     search_fields = ('username', 'email', 'first_name', 'last_name')
     actions = [make_member]
 

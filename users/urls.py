@@ -1,4 +1,4 @@
-from django.conf.urls import url
+
 from django.urls import path
 from django.contrib.auth.decorators import login_required
 from users import views
@@ -13,6 +13,7 @@ urlpatterns = [
     path('register/', views.RegisterView, name="register"),
     path('passwd/', login_required(views.change_passwd), name="chg_passwd"),
     path('admin/user/<int:id>/change_password', views.admin_change_passwd, name="admin_change_passwd"),
-    path('activate/<uidb64>/<token>', views.activate, name='activate')
+    path('activate/<uidb64>/<token>', views.activate, name='activate'),
+    path('delete/', views.delete, name='delete')
 
 ]

@@ -21,21 +21,6 @@ from .forms import UserForm, ChangePasswordForm, AdminChangePasswordForm
 from .tokens import account_activation_token
 
 
-"""def send_activate_email(user, request):
-    current_site = get_current_site(request)
-    email_subject = 'Activez votre compte'
-    email_body = render_to_string('activate.html',{
-        'user':user,
-        'domain':current_site,
-        'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-        'token':generate_token.make_token(user)
-    })
-
-    email=EmailMessage(subject=email_subject,body=email_body,
-                 from_email=settings.EMAIL_FROM_USER,to=[user.email])
-    email.send()
-"""
-
 
 @require_POST
 def login_view(request):
@@ -125,32 +110,6 @@ class UserDetailView(DetailView):
     context_object_name = 'user'
     slug_field = "username"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        request = self.request
-
-        TRANSACTION_NUM = 5  # Number of transactions to be shown on the page
-
-        # Public
-        streampubtosend = self.object.actor_actions.filter(public=True)\
-            .prefetch_related('target', 'actor', 'action_object')[:TRANSACTION_NUM]
-
-        # Private
-        all_private_transactions = []
-        if request.user == self.object:
-            transfers = list(request.user.transfertransaction_set.all().order_by("-when")[:TRANSACTION_NUM])
-            topups = list(request.user.topuptransaction_set.all().order_by("-when")[:TRANSACTION_NUM])
-            purchases = list(request.user.producttransaction_set.all().order_by("-when")[:TRANSACTION_NUM])
-            misc = list(request.user.misctransaction_set.all().order_by("-when")[:TRANSACTION_NUM])
-            # Sort all transactions and keep only the TRANSACTION_NUM most recent
-            all_private_transactions = sorted(
-                transfers + topups + purchases + misc, key=lambda x: x.when, reverse=True)[:TRANSACTION_NUM]
-
-        context['stream_pub'] = streampubtosend
-        context['stream_priv'] = all_private_transactions
-
-        return context
-
 
 class CurrentUserDetailView(UserDetailView):
     def get_object(self):
@@ -183,7 +142,7 @@ def RegisterView(request):
                 [to_email]
             )
             email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            return HttpResponse('Merci de confirmer votre adresse mail pour finaliser votre inscription')
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
@@ -205,18 +164,12 @@ def activate(request, uidb64, token):
         return HttpResponse("Le lien d'activation n'est pas valide !")
 
 
-"""def activate_user(request,uidb64,token):
+def delete(request):
 
-    try:
-        uid=force_text(urlsafe_base64_encode(uidb64))
-        user=User.objects.get(pk=uid)
-    except Exception as e:
-        user=None
+    context = {}
+    user = request.user
+    user.is_active = False
+    user.save()
+    context['msg'] = 'Profile successfully disabled.'
 
-    if user and generate_token.check_token(user,token):
-        user.is_email_verified=True
-        user.save()
-        messages.add_message(request,messages.SUCCESS,'Email vérifié avec succès, vous pouvez maintenant vous connecté')
-        return redirect(reverse('login_view'))
-
-    return render(request,'activate_failed.html',{'user':})"""
+    return redirect(reverse('logout'))

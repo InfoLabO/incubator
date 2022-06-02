@@ -11,7 +11,7 @@ Changez votre mot de passe
 {% endblock %}
 
 {% block content %}
-<form action="{% url "chg_passwd" %}" method="post" class="form">
+<form action="{% url 'chg_passwd' %}" method="post" class="form">
     {% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from users.serializers import UserSerializer
-from .models import SpaceStatus, MusicOfTheDay
+from .models import SpaceStatus
 
 
 class PamelaSerializer(serializers.Serializer):
@@ -17,8 +17,3 @@ class SpaceStatusSerializer(serializers.ModelSerializer):
         model = SpaceStatus
         fields = ('time', 'is_open',)
 
-
-class MotdSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MusicOfTheDay
-        fields = ('url', 'irc_nick', 'day')

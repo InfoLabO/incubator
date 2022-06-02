@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 import re
 import sentry_sdk
-from django.conf.global_settings import EMAIL_USE_SSL, EMAIL_TIMEOUT, EMAIL_SSL_KEYFILE, EMAIL_SSL_CERTFILE, EMAIL_HOST, \
-    EMAIL_PORT, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_USE_TLS
 
 from django.contrib.messages import constants as messages
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -30,6 +28,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "vairysecrette")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get("DEBUG", "1")))
+#DEBUG = False
 
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,::1,localhost").split(
@@ -68,7 +67,6 @@ INSTALLED_APPS = (
     "users",
     "projects",
     "space",
-    "streams",
     "django_nyt",
     "mptt",
     "wiki",
@@ -116,9 +114,9 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = "fr-be"
+LANGUAGE_CODE = "fr-fr"
 
-TIME_ZONE = "Europe/Brussels"
+TIME_ZONE = "Europe/Paris"
 
 USE_I18N = True
 
@@ -143,7 +141,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "collected_static/")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 MEDIA_URL = "/media/"
-DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+"""DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'"""
 
 TEMPLATES = [
     {
@@ -337,7 +335,7 @@ IGNORE_LIST_RE = [re.compile(prefix + r"(:[0-9a-f]{2}){3}") for prefix in MAC_RA
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'soumaha745@gmail.com'
-EMAIL_HOST_PASSWORD = 'Conakry2001!'  # os.environ['password_key'] suggested
+EMAIL_HOST_PASSWORD = ''  # os.environ['password_key'] suggested
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

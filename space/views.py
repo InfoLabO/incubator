@@ -15,11 +15,10 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 from .djredis import get_redis, set_space_open, space_is_open
-from .models import MacAdress, SpaceStatus, MusicOfTheDay
 from .forms import MacAdressForm
-from .serializers import PamelaSerializer, SpaceStatusSerializer, MotdSerializer
+from .models import SpaceStatus, MacAdress
+from .serializers import PamelaSerializer, SpaceStatusSerializer
 from .decorators import private_api, one_or_zero
-# from .plots import weekday_probs, human_time
 from .helpers import is_stealth_mode, make_empty_pamela, make_pamela, user_should_see_pamela
 from users.models import User
 from realtime.helpers import publish_space_state
@@ -251,25 +250,3 @@ class OpeningsViewSet(viewsets.ModelViewSet):
     serializer_class = SpaceStatusSerializer
 
 
-class MotdViewSet(viewsets.ModelViewSet):
-    queryset = MusicOfTheDay.objects.all().order_by('-day')
-    serializer_class = MotdSerializer
-
-
-def motd(request, page):
-    list_music = MusicOfTheDay.objects.all().order_by("-day")
-    p = Paginator(list_music, 39)
-    context = {
-        'has_next': p.page(page).has_next(),
-        'has_previous': p.page(page).has_previous(),
-        'page': p.page(page),
-        'page_number': p.page(page).number,
-        'short_page_range_before': range(p.page(page).number - 5, p.page(page).number),
-        'page_range_before': range(1, p.page(page).number),
-        'short_page_range_after': range(p.page(page).number + 1, p.page(page).number + 6),
-        'page_range_after': range(p.page(page).number + 1, p.num_pages + 1),
-        'last_page_need_shortened': p.num_pages - 5,
-        'num_pages': p.num_pages
-    }
-
-    return render(request, "motd.html", context)
