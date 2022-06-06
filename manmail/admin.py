@@ -6,10 +6,6 @@ from django.conf import settings
 from .models import Email
 from users.models import User
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d2e5ecf712c901ebda228555842d71e48ad230db
 @admin.register(Email)
 class EmailAdmin(admin.ModelAdmin):
     list_display = ('subject', 'sent', 'created', 'modified', )
