@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from space.models import MacAdress, SpaceStatus, PrivateAPIKey
 
 
@@ -13,7 +12,6 @@ class MacAdressAdmin(admin.ModelAdmin):
 class SpaceStatusAdmin(admin.ModelAdmin):
     list_display = ('time', 'is_open')
     list_filter = ('time', 'is_open')
-
 
 
 @admin.register(PrivateAPIKey)

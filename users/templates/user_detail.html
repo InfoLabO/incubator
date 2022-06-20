@@ -17,11 +17,7 @@ Profil de {{user.username}}
 
 <div class="pb-2 mt-4 mb-2 border-bottom">
     <h1>
-        {% if not user.avatar %}
-            <img src="/static/img/pp_defaut.jpg" width="200"/>
-        {% else %}
-            <img src="/static/img/{{userr.avatar}}" width="200"/>
-        {% endif %}
+        {{ user.username }}
         {% if request.user == user %}
             <a href="{% url 'user_edit' %}" class="btn btn-primary">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
@@ -35,6 +31,25 @@ Profil de {{user.username}}
             </a>
         {% endif %}
     </h1>
+        <table class="table table-condensed">
+            {% if user.newsletter %}
+            <tr>
+                <td>
+                    <a href="{% url 'desactiver_newsletter' %}" class="btn btn-warning pull-right">
+                        Ne plus reçevoir de newsletters
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td>
+                    <a href="{% url 'activer_newsletter' %}" class="btn btn-primary pull-right">
+                        Reçevoir des newsletters
+                    </a>
+                </td>
+            </tr>
+            {% endif %}
+        </table>
 </div>
 
 <div class="row">

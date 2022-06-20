@@ -25,48 +25,18 @@ class MembershipInline(admin.TabularInline):
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
-    def groups(self, user):
-        short_name = str
-        p = sorted(
-            u"<a title='%s'>%s</a>" % (x, short_name(x))
-            for x in user.groups.all())
-        if user.user_permissions.count():
-            p += ['<strong>+</strong>']
-        value = ', '.join(p)
-        return mark_safe("%s" % value)
-    groups.allow_tags = True
-    groups.short_description = 'Membre des groupes'
 
     def change_password(self, user):
         url = reverse("admin_change_passwd", args=(user.id,))
         return format_html(f"<a href='{url}'>Changer le mot de passe</a>")
     change_password.allow_tags = True
 
-    def is_member(self, user):
-        """ We suppose each asbl year starts the 15th of june and ends the 14th of june of the next year """
-
-        year = current_year()
-        asbl_year, created = ASBLYear.objects.get_or_create(
-            start=datetime(year, 6, 15),
-            stop=datetime(year + 1, 6, 14)
-        )
-        membership = Membership.objects.filter(asbl_year=asbl_year, user=user)
-        return membership.count() != 0
-    is_member.short_description = u'Est membre ASBL'
-
-    def make_member(modeladmin, request, queryset):
-        asbl_year = ASBLYear.objects.last()
-        for user in queryset.all():
-            Membership.objects.create(user=user, asbl_year=asbl_year)
-    make_member.short_description = "Rendre membre pour l'année en cours"
-
-    list_display = ('username', 'email', 'is_superuser', 'created', 'groups', 'is_active')
+    list_display = ('username', 'email', 'is_superuser', 'created', 'newsletter', 'is_active')
     list_filter = ('is_superuser', 'created', 'last_login', 'username',)
     search_fields = ('username', 'email', 'first_name', 'last_name')
-    actions = [make_member]
 
-    inlines = (MacAdressInline, MembershipInline)
-    filter_horizontal = ('groups', 'user_permissions')
+    inlines = (MacAdressInline,)
+    filter_horizontal = ('user_permissions', )
     readonly_fields = ('change_password', )
 
     fieldsets = (
@@ -74,7 +44,8 @@ class UserAdmin(UserAdmin):
             'fields': (
                 ('username', 'email'),
                 ('first_name', 'last_name'),
-                ('hide_pamela',),
+                ('hide_pamela', 'newsletter',),
+
             )
         }),
         (None, {
@@ -82,7 +53,7 @@ class UserAdmin(UserAdmin):
         }),
         ('Permissions', {
             'classes': ('collapse',),
-            'fields': ('is_superuser', 'groups', 'user_permissions')
+            'fields': ('is_superuser', 'user_permissions')
         }),
     )
 

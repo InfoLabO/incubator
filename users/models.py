@@ -72,7 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=127, blank=True)
     hide_pamela = models.BooleanField(default=False, verbose_name='caché sur pamela')
     is_active = models.BooleanField(default=True, verbose_name='Utilisateur actif')
-    avatar = models.ImageField(upload_to='photo_profil', null=True, default='/static/img/pp_defaut.jpg',blank=True)
+    newsletter = models.BooleanField(default=True, verbose_name='abonné à la newsletter')
     # , widget=forms.Textarea(attrs={'placeholder': 'Ajouter une description', 'style':'resize:none;'}))
 
     def get_short_name(self):

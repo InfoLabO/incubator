@@ -24,7 +24,6 @@ urlpatterns = [
     path('notifications/', include('django_nyt.urls')),
     path('r/<slug:short_name>', redir.views.short_url, name='redirection'),
     path('ckeditor', include('ckeditor_uploader.urls')),
-    path('mail', include('manmail.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

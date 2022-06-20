@@ -43,7 +43,6 @@ def password_reset_done(request):
         request,
         "Votre mot de passe a bien été réinitialisé, vous pouvez vous connecter avec votre nouveau mot de passe"
     )
-
     return HttpResponseRedirect(reverse('home'))
 
 

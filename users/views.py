@@ -14,6 +14,8 @@ from django.urls import reverse
 from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.contrib.auth import login, authenticate
+
+from incubator.settings import EMAIL_HOST_USER
 from users.forms import UserCreationForm
 from .serializers import UserSerializer
 from .models import User
@@ -21,14 +23,11 @@ from .forms import UserForm, ChangePasswordForm, AdminChangePasswordForm
 from .tokens import account_activation_token
 
 
-
 @require_POST
 def login_view(request):
     username = request.POST.get("username", "")
     password = request.POST.get("password", "")
-
     user = authenticate(request, username=username, password=password)
-
     if user is not None:
         login(request, user)
         next = request.GET.get("next", "/")
@@ -128,7 +127,7 @@ def RegisterView(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
-            current_site = HttpRequest.get_host(self=request)
+            current_site = get_current_site(request)
             email_subject = 'Activez votre compte'
             message = render_to_string('activate.html', {
                 'user': user,
@@ -138,7 +137,7 @@ def RegisterView(request):
             })
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(
-                email_subject, message, 'contact@infolabo.fr',
+                email_subject, message, EMAIL_HOST_USER,
                 [to_email]
             )
             email.send()
@@ -173,3 +172,23 @@ def delete(request):
     context['msg'] = 'Profile successfully disabled.'
 
     return redirect(reverse('logout'))
+
+
+def on_newsletter(request):
+    request.user.newsletter = True
+    request.user.save()
+    messages.success(
+        request,
+        "Vous pouvez maintenant reçevoir nos prochains Newsletters"
+    )
+    return HttpResponseRedirect(reverse('profile'))
+
+
+def off_newsletter(request):
+    request.user.newsletter = False
+    request.user.save()
+    messages.success(
+        request,
+        "Vous n'allez plus reçevoir de Newsletters"
+    )
+    return HttpResponseRedirect(reverse('profile'))

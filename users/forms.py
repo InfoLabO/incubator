@@ -7,7 +7,7 @@ from .models import User
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'avatar', ]
+        fields = ['username', 'first_name', 'last_name', 'email', 'newsletter', ]
 
 
 class UserCreationForm(forms.ModelForm):
@@ -33,11 +33,10 @@ class UserCreationForm(forms.ModelForm):
 
     email = forms.EmailField(max_length=200)
 
-    avatar = forms.ImageField()
 
     class Meta:
         model = User
-        fields = ("avatar", "username", "first_name", "last_name", "email", "password1", "password2")
+        fields = ("username", "first_name", "last_name", "email", "password1", "password2")
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")

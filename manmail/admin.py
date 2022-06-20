@@ -1,15 +1,13 @@
 from django.contrib import admin
 from django.contrib import messages
-from django.core.mail import EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.conf import settings
 
+from incubator.settings import EMAIL_HOST_USER
 from .models import Email
 from users.models import User
 
-<<<<<<< HEAD
 
-=======
->>>>>>> d2e5ecf712c901ebda228555842d71e48ad230db
 @admin.register(Email)
 class EmailAdmin(admin.ModelAdmin):
     list_display = ('subject', 'sent', 'created', 'modified', )
@@ -30,15 +28,13 @@ class EmailAdmin(admin.ModelAdmin):
             return
 
         recipients = [u.email for u in User.objects.filter(newsletter=True)]
-        message = EmailMultiAlternatives(
-            subject=email.subject,
-            body=email.content,
-            from_email='Newsletter UrLab <contact@urlab.be>',
-            to=["UrLab <contact@urlab.be>"],
-            bcc=recipients,
+        send_mail(
+            email.subject,
+            email.content,
+            EMAIL_HOST_USER,
+            recipients,
+            fail_silently=False,
         )
-
-        message.send()
         email.sent = True
         email.save()
         self.message_user(request, "L'email a été énvoyé.")
@@ -58,10 +54,10 @@ class EmailAdmin(admin.ModelAdmin):
 
         message = EmailMultiAlternatives(
             subject=email.subject,
-            body=email.content,
-            from_email='Newsletter UrLab <contact@urlab.be>',
-            to=["contact-test@urlab.be"],
-            bcc=[request.user.email],
+            body = email.content,
+            from_email = EMAIL_HOST_USER,
+            to=["soumaha745@gmail.com"],
+            bcc=["soumaha745@gmail.com"],
         )
 
         message.send()
