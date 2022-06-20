@@ -7,7 +7,6 @@ from incubator.settings import EMAIL_HOST_USER
 from .models import Email
 from users.models import User
 
-
 @admin.register(Email)
 class EmailAdmin(admin.ModelAdmin):
     list_display = ('subject', 'sent', 'created', 'modified', )
