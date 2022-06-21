@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block title %}
+Formulaire de photo
+{% endblock %}
+
+{% block head %}
+    {{ form.media  }}
+     <link href="{% static "css/bootstrap-multiselect.css" %}" rel="stylesheet">
+     <script type="text/javascript" src="{% static "js/bootstrap-multiselect.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+<form action="" method="post" class="form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<!-- Create book button -->
+<button id="add_tag" class="btn btn-success" type="button" name="button"><span class="fa fa-plus" aria-hidden="true"></span> Ajouter Tag</button>
+
+<br>
+    {% buttons %}
+<br>
+    <button type="submit" class="btn btn-primary">
+        Submit
+    </button>
+    {% endbuttons %}
+
+</form>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#id_tags').multiselect({
+            enableFiltering: true,
+            filterBehavior: 'text',
+            buttonWidth: '100%',
+            enableCaseInsensitiveFiltering: true,
+        });
+    });
+    $(document).ready(function() {
+    $("#add_tag").modalForm({
+        formURL: "{% url 'add_tag' %}",
+    });
+    $(".alert-success").fadeTo(2000, 500).slideUp(500, function(){
+    $(".alert-success").slideUp(500);
+});
+
+});
+</script>
+
+
+{% endblock %}

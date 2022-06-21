@@ -1,0 +1,27 @@
+{% load bootstrap4 %}
+
+{% block content %}
+<form action={% url 'photo_by_tag' %} method="post" class="form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">
+        <span class="fa fa-search" aria-hidden="true"></span> Rechercher
+    </button>
+                <a class="btn btn-success" href="{% url 'gallery_home' %}">
+            <span class="fa fa-refresh" aria-hidden="true"></span>
+        </a>
+    </button>
+    {% endbuttons %}
+</form>
+     <script type="text/javascript">
+    $(document).ready(function() {
+        $('#id_name').multiselect({
+            enableFiltering: true,
+            filterBehavior: 'text',
+            buttonWidth: '100%',
+            enableCaseInsensitiveFiltering: true,
+        });
+    });
+</script>
+{% endblock %}
