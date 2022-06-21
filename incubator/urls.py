@@ -15,6 +15,7 @@ urlpatterns = [
     path('projects/', include('projects.urls')),
     path('accounts/', include('users.urls')),
     path('space/', include('space.urls')),
+    path('gallery/', include('gallery.urls')),
     path('wiki/', include('wiki.urls')),
     path('storage/', include('storage.urls')),
     path('admin/', admin.site.urls),

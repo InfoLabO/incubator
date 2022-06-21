@@ -8,8 +8,6 @@ Formulaire de projet
 
 {% block head %}
     {{ form.media  }}
-    <!-- <link href="{% static "css/bootstrap-multiselect.css" %}" rel="stylesheet"> -->
-    <!-- <script type="text/javascript" src="{% static "js/bootstrap-multiselect.js" %}"></script> -->
 {% endblock %}
 
 {% block content %}
@@ -22,23 +20,4 @@ Formulaire de projet
     </button>
     {% endbuttons %}
 </form>
-
-<!-- <script type="text/javascript">
-    $(document).ready(function() {
-        $('#id_participants').multiselect({
-            enableFiltering: true,
-            filterBehavior: 'text',
-            buttonWidth: '100%',
-            enableCaseInsensitiveFiltering: true,
-        });
-        $('#id_dependencies').multiselect({
-            enableFiltering: true,
-            filterBehavior: 'text',
-            disableIfEmpty: true,
-            buttonWidth: '100%',
-            enableCaseInsensitiveFiltering: true,
-        });
-    });
-</script> -->
-
 {% endblock %}

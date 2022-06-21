@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+Wiki UrLab
+{% endblock %}
+{% block opengraph %}
+    <meta property="og:title" content="galerie photos de l'infoLabO" />
+    <meta property="og:description" content="Le wiki du hackerspace, toute l'aide dont tu as besoin est ici :)" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://urlab.be{% url "gallery_home" %}" />
+    <meta property="og:image" content="https://urlab.be/static/img/space-invaders.png" />
+{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">InfoLabo</a></li>
+    <li class="breadcrumb-item"><a href="{% url "gallery_home" %}">Galerie</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ album.title }}</li>
+  </ol>
+</nav>
+        <section class="py-2 text-center container">
+        <div class="row py-lg-2">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">Notre galerie photos !</h1>
+                <p class="lead text-muted">t'as toutes les photos de l'infolabo ici</p>
+                {% include "search_picture.html" %}
+            </div>
+        </div>
+    </section>
+<div class="album py-5" >
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for photo in photos %}
+            {% include "photo_card.html" %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

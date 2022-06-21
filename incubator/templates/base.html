@@ -19,6 +19,8 @@
             <script src="https://kit.fontawesome.com/ba8a2a8bc9.js" crossorigin="anonymous"></script>
             <script src="https://kit.fontawesome.com/482ab848a2.js" crossorigin="anonymous"></script>
             <link href="{% static 'css/style.css' %}" rel="stylesheet">
+            <link href="{% static 'css/lightbox.css' %}" rel="stylesheet">
+            <link href="{% static "css/bootstrap-multiselect.css" %}" rel="stylesheet">
             <link rel="icon" href="/static/img/favicon.ico" />
             <title>{% block title %}InfoLabo{% endblock %}</title>
             {% block head %}{% endblock %}
@@ -34,12 +36,12 @@
                 <meta property="og:image" content="https://urlab.be/static/img/space-invaders.png" />
             {% endblock %}
         <script src='https://cdn.jsdelivr.net/npm/@widgetbot/crate@3' async defer>
-    new Crate({
-        server: '980437343351742474', // Serveur de mor
-        channel: '980437343825723442',// #general
-        avatar: 'avatar url'
-    })
-</script>
+            new Crate({
+                server: '980437343351742474', // Serveur de mor
+                channel: '980437343825723442',// #general
+                avatar: 'avatar url'
+            })
+        </script>
         </head>
 
         <body class="base-body">
@@ -77,13 +79,18 @@
                                 Wiki
                             </a>
                         </li>
-
-                      <li class="nav-item {% active_if_contains '/storage/' %}">
-                        <a class="nav-link" href="{% url 'storage_home' %}">
-                             <i class="fa-solid fa-sd-card"></i>
-                            Storage
-                        </a>
-                      </li>
+                        <li class="nav-item {% active_if_contains '/storage/' %}">
+                            <a class="nav-link" href="{% url 'storage_home' %}">
+                                <i class="fa-solid fa-sd-card"></i>
+                                Stockage
+                            </a>
+                        </li>
+                        <li class="nav-item {% active_if_contains '/gallery/' %}">
+                            <a class="nav-link" href="{% url 'gallery_home' %}">
+                                <i class="fa fa-picture-o"></i>
+                                galerie
+                            </a>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if request.user.is_staff %}
@@ -146,5 +153,8 @@
                 </div>
             </footer>
             <script src="{% static 'js/navbar.js' %}"></script>
+            <script src="{% static 'js/lightbox.js' %}"></script>
+            <script type="text/javascript" src="{% static "js/bootstrap-multiselect.js" %}"></script>
+            <script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
         </body>
     </html>
