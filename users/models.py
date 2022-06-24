@@ -5,7 +5,6 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
 from django.urls import reverse
 from django.core.exceptions import ValidationError
-from incubator.models import ASBLYear
 
 # Create your models here.
 #    User :
@@ -86,11 +85,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.is_superuser
 
     @property
-    def is_member(self):
-        year = ASBLYear.objects.filter(start__gte=timezone.now(), stop__lt=timezone.now())
-        return self.membership_set.filter(asbl_year=year).count() > 0
-
-    @property
     def gravatar(self):
         mail = self.email.lower().encode('utf8')
         gravatar_url = "//www.gravatar.com/avatar/" + hashlib.md5(mail).hexdigest() + "?d=wavatar"
@@ -103,7 +97,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class Membership(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    asbl_year = models.ForeignKey('incubator.ASBLYear', on_delete=models.CASCADE)
 
     def __str__(self):
         return "Membre du hackerspace durant l'année {}".format(self.asbl_year)

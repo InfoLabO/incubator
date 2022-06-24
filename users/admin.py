@@ -10,7 +10,6 @@ from django.utils.html import format_html
 from .models import User, Membership
 from .utils import current_year
 from space.models import MacAdress
-from incubator.models import ASBLYear
 
 
 class MacAdressInline(admin.TabularInline):

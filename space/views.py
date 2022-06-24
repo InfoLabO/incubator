@@ -81,19 +81,6 @@ def status_change(request, open):
     return JsonResponse(r, safe=False)
 
 
-@private_api(url=str, nick=str)
-def motd_change(request, url, nick):
-    try:
-        MusicOfTheDay.objects.create(url=url, irc_nick=nick)
-    except IntegrityError:
-        return JsonResponse({
-            "error": "A motd was already added today. Try again tomorrow.",
-            "type": "TRY_AGAIN_TOMORROW",
-        }, status=409)
-    r = {'changed_by': nick, 'url': url}
-    return JsonResponse(r, safe=False)
-
-
 class DeleteMACView(DeleteView):
     model = MacAdress
     success_url = reverse_lazy('profile')
