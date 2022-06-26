@@ -22,6 +22,7 @@ def wiki_home(request):
         'hackerspace': articles.filter(category="h"),
     })
 
+
 class ArticleAddView(LoginRequiredMixin, CreateView):
     form_class = ArticleForm
     template_name = 'add_article.html'
@@ -75,6 +76,7 @@ class ArticleOldDetailView(DetailView):
     model = Article.history.model
     template_name = 'article_old_detail.html'
     context_object_name = 'article'
+
 
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()

@@ -28,7 +28,7 @@ class Component(ApplicationSession):
 if __name__ == '__main__':
     runner = ApplicationRunner(
         environ.get("AUTOBAHN_DEMO_ROUTER", u"ws://snips.lan:8081/ws"),
-        u"urlab",
+        u"infolabo",
         debug_wamp=False,  # optional; log many WAMP details
         debug=False,  # optional; log even more details
     )

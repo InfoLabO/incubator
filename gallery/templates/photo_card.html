@@ -23,7 +23,7 @@
         <div class="card-body">
             <div class="btn-group mx-auto" style="width: 100%;">
                     {% if request.user.is_authenticated %}
-                         <a href="{% url "edit_photo" photo.id %}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                         <a href="{% url 'edit_photo' photo.id %}" class="btn btn-sm btn-outline-secondary">Modifier</a>
                          <a href="{% url 'delete_photo' photo.album.id photo.id %}" class="btn btn-sm btn-outline-secondary">Supprimer</a>
                      {% endif %}
             </div>

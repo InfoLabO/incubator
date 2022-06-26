@@ -1,15 +1,11 @@
-
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from actstream.models import Action
 from django.contrib import messages
 from django.urls import reverse
-
 from space.fakeredis import get_redis, space_is_open
 from realtime.helpers import feed_reducer
-
 from constance import config as dyn_config
-
 from wiki.models import Article
 
 

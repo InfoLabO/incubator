@@ -8,17 +8,17 @@
 
 {% block opengraph %}
     <meta property="og:title" content="{{ article.title }}" />
-    <meta property="og:url" content="https://urlab.be{% url "view_article" article.pk %}" />
+    <meta property="og:url" content="https://infolabo.org{% url 'view_article' article.pk %}" />
     <meta property="og:description" content="{{ article.content }}" />
-    <meta property="og:image" content="https://urlab.be/static/img/space-invaders.png" />
+    <meta property="og:image" content="https://infolabo.org/static/img/space-invaders.png" />
     <meta property="article:section" content="Badge" />
 {% endblock %}
 
 {% block content %}
     <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">UrLab</a></li>
-        <li class="breadcrumb-item"><a href="{% url "wiki_home" %}">Wiki</a></li>
+        <li class="breadcrumb-item"><a href="/">InfoLabO</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'wiki_home' %}">Wiki</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{article.title}}</li>
     </ol>
     </nav>
@@ -47,7 +47,7 @@
             </a>
         </li>
         <li class="nav-item" role="presentation">
-            <a href="{% url "edit_article" article.id %}" class="nav-link">
+            <a href="{% url 'edit_article' article.id %}" class="nav-link">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
                 </svg>
@@ -74,7 +74,7 @@
                         <div class = "card-body">
                             <p class="card-text"> modifié par: {{ revision.last_modifier }} <br/>
                             commentaire: {{ revision.commit}}</p>
-                        <a href="{% url "view_old_version" article.pk revision.pk %}" class="btn btn-primary">Visualiser</a>
+                        <a href="{% url 'view_old_version' article.pk revision.pk %}" class="btn btn-primary">Visualiser</a>
                         </div>
                     </div>
                 {% endfor %}

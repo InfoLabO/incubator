@@ -3,9 +3,6 @@ from django.db import models
 from django.urls import reverse
 from simple_history.models import HistoricalRecords
 from ckeditor_uploader.fields import RichTextUploadingField
-# from datetime import datetime
-# from projects.models import Project
-
 User = settings.AUTH_USER_MODEL
 
 CATEGORY = (

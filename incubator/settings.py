@@ -80,6 +80,7 @@ INSTALLED_APPS = (
     "ckeditor",
     "ckeditor_uploader",
     "storage",
+    "gallery",
 )
 
 CKEDITOR_UPLOAD_PATH = "uploads/"

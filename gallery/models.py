@@ -2,7 +2,6 @@ from django.db import models
 from django.urls import reverse
 from django_resized import ResizedImageField
 
-# Create your models here.
 
 class Album(models.Model):
     title = models.CharField(max_length=300, verbose_name='Nom')
@@ -20,6 +19,7 @@ class Album(models.Model):
 
     def get_absolute_url(self):
         return reverse('gallery_home')
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=100,null=False,blank=False,unique=True)
@@ -39,6 +39,7 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.name
+
     def get_absolute_url(self):
         return reverse('view_album',args=[self.album_id])
 

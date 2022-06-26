@@ -1,7 +1,5 @@
 from django.contrib import admin
-
 from .models import Album, Tag, Photo
-
 
 
 @admin.register(Album)
@@ -13,7 +11,6 @@ class AlbumAdmin(admin.ModelAdmin):
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ('short_description','picture','album')
     filter_horizontal = ('tags',)
-
 
 
 @admin.register(Tag)

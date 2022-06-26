@@ -1,7 +1,6 @@
 from django.forms import ModelForm, Textarea
-
-
 from .models import Article
+
 
 class ArticleForm(ModelForm):
     class Meta:

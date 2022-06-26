@@ -7,19 +7,12 @@ from django.contrib import auth
 from django.urls import reverse
 from django.utils.html import format_html
 
-from .models import User, Membership
-from .utils import current_year
+from .models import User
 from space.models import MacAdress
-from incubator.models import ASBLYear
 
 
 class MacAdressInline(admin.TabularInline):
     model = MacAdress
-    extra = 1
-
-
-class MembershipInline(admin.TabularInline):
-    model = Membership
     extra = 1
 
 

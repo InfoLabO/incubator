@@ -81,19 +81,6 @@ def status_change(request, open):
     return JsonResponse(r, safe=False)
 
 
-@private_api(url=str, nick=str)
-def motd_change(request, url, nick):
-    try:
-        MusicOfTheDay.objects.create(url=url, irc_nick=nick)
-    except IntegrityError:
-        return JsonResponse({
-            "error": "A motd was already added today. Try again tomorrow.",
-            "type": "TRY_AGAIN_TOMORROW",
-        }, status=409)
-    r = {'changed_by': nick, 'url': url}
-    return JsonResponse(r, safe=False)
-
-
 class DeleteMACView(DeleteView):
     model = MacAdress
     success_url = reverse_lazy('profile')
@@ -149,31 +136,27 @@ def spaceapi(request):
 
     response = {
         "api": "0.13",
-        "space": "UrLab",
-        "logo": "https://urlab.be/static/img/space-invaders.png",
-        "url": "https://urlab.be",
+        "space": "InfoLabO",
+        "logo": "https://infolabo/static/img/space-invaders.png",
+        "url": "https://infolabo.org",
         "location": {
             "lat": 50.812915,
             "lon": 4.384396,
-            "address": "131, avenue Buyl, 1050, Bruxelles, Belgium",
+            "address": "6 Rue Léonard de Vinci, 45067 Orléans",
         },
         "state": {
             "open": space_is_open(client),
             "lastchange": round(SpaceStatus.objects.last().time.timestamp()),
             "icon": {
-                "open": "https://urlab.be/static/img/space-invaders-open.png",
-                "closed": "https://urlab.be/static/img/space-invaders.png"
+                "open": "https://infolab.org/static/img/space-invaders-open.png",
+                "closed": "https://infolabo.org/static/img/space-invaders.png"
             }
         },
         # "events": {},
         "contact": {
-            "issue_mail": "contact@urlab.be",
-            "ml": "hackulb@cerkinfo.be",
-            "twitter": "@UrLabBxl",
-            "facebook": "https://www.facebook.com/urlabbxl",
-            "irc": "irc://irc.libera.chat#urlab",
-            "email": "contact@urlab.be",
-            "phone": "+3226504967",
+            "issue_mail": "contact@infolabo.org",
+            "email": "contact@infolabo.org",
+            "phone": "+33",
             "keymasters": keymasters,
         },
         "issue_report_channels": [

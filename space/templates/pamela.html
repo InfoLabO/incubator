@@ -11,7 +11,7 @@ PAMELA
 
     <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">UrLab</a></li>
+        <li class="breadcrumb-item"><a href="/">InfoLabO</a></li>
         <li class="breadcrumb-item active" aria-current="page">Pamela</li>
     </ol>
     </nav>
@@ -60,7 +60,7 @@ PAMELA
                     {% if request.user.is_authenticated %}
                         <p>Et ajoutez votre machine à Pamela : </p>
                         <div>
-                            <form action="{% url "pamela_list" %}" method="post" class="form">
+                            <form action="{% url 'pamela_list' %}" method="post" class="form">
                                 {% csrf_token %}
                                 {% bootstrap_form form %}
                                 {% buttons %}
@@ -71,7 +71,7 @@ PAMELA
                         <p class="text-muted">
                             <small>
                                 * En donnant votre adresse MAC©, vous acceptez l'enregistrement de l'association entre
-                                votre pseudonyme et l'adresse matérielle de votre ordinateur sur le serveur de UrLab©.
+                                votre pseudonyme et l'adresse matérielle de votre ordinateur sur le serveur de InfoLabO.
                                 Cette information ne sera utilisée que pour afficher votre nom sur cette page. Si vous
                                 ne souhaitez pas communiquer cette information, seuls les deux derniers bytes de cette
                                 adresse sont affichés sur cette page<sup>Patent pending</sup>.
@@ -85,9 +85,9 @@ PAMELA
         </div>
     </div>
 
-<script src="{% static "js/react.min.js" %}"></script>
-<script src="{% static "js/react-dom.min.js" %}"></script>
-<script src="{% static "js/babel.min.js" %}"></script>
+<script src="{% static 'js/react.min.js' %}"></script>
+<script src="{% static 'js/react-dom.min.js' %}"></script>
+<script src="{% static 'js/babel.min.js' %}"></script>
 <script type="text/babel">
 var PamelaUsersBox = React.createClass({
     render: function(){
@@ -132,7 +132,7 @@ var Pamela = React.createClass({
         } else {
             return <div className="row-fluid">
                 <div className="col-md-6 col-sm-12">
-                    <h3>Membres de UrLab</h3>
+                    <h3>Membres de InfoLabO</h3>
                     <PamelaUsersBox users={this.state.users}/>
                 </div>
                 <div className="col-md-6 col-sm-12">

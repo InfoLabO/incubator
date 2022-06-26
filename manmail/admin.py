@@ -1,11 +1,10 @@
 from django.contrib import admin
 from django.contrib import messages
 from django.core.mail import EmailMultiAlternatives, send_mail
-from django.conf import settings
-
 from incubator.settings import EMAIL_HOST_USER
 from .models import Email
 from users.models import User
+
 
 @admin.register(Email)
 class EmailAdmin(admin.ModelAdmin):

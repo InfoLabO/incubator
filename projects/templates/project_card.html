@@ -42,16 +42,16 @@
       </div>
       <p class="row-fluid project-card-description">{{ project.short_description }}</p>
       <p class="row-fluid text-center">
-        <a href="{% url "view_project" project.id %}" class="btn btn-primary" role="button">
+        <a href="{% url 'view_project' project.id %}" class="btn btn-primary" role="button">
           <i class="fa fa-eye" aria-hidden="true"></i>
           Voir
         </a>
         {% if request.user != project.maintainer and request.user not in project.participants.all %}
-        <a href="{% url "project_add_participation" project.id %}" class="btn btn-outline-dark" role="button">
+        <a href="{% url 'project_add_participation' project.id %}" class="btn btn-outline-dark" role="button">
           Participer
         </a>
         {% else %}
-        <a href="{% url "edit_project" project.id %}" class="btn btn-outline-dark" role="button">
+        <a href="{% url 'edit_project' project.id %}" class="btn btn-outline-dark" role="button">
           <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor"
             xmlns="http://www.w3.org/2000/svg">
             <path

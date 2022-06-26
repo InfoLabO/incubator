@@ -4,10 +4,15 @@ Stoker un fichier
 {% endblock %}
 
 {% block head %}
-    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="w22c778ge7dnsuq "></script >
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="w22c778ge7dnsuq "></script>
 {% endblock %}
 
 {% block content %}
+
+    <h1>An Example of a Minimal Integration of Dropbox's Chooser JS</h1>
+    <div id="dropboxContainer"></div>
+    <script src="custom.js"></script>
+
     <a href="https://www.dropbox.com/sh/1qzbdt30apm5inj/AAB1sg_okRWzOfzDsdWQZofXa?dl=0"
        class="dropbox-embed"
        data-height="750px"

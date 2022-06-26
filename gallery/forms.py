@@ -12,16 +12,19 @@ class AlbumForm(forms.ModelForm):
         model = Album
         fields = ['title', 'short_description', 'cover']
 
+
 class PhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
         exclude = ['album', 'created','picture']
+
 
 class PhotoAddForm(forms.ModelForm):
     class Meta:
         model = Photo
         fields = ['name','short_description','tags','picture']
         exclude = ['album', 'created']
+
 
 class TagForm(BSModalModelForm):
     class Meta:
@@ -39,6 +42,3 @@ class TagClaForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['name']= ModelMultipleChoiceField(queryset=Tag.objects.all())
         self.fields['name'].label=''
-
-
-

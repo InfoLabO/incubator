@@ -7,11 +7,10 @@ from django.conf.urls.static import static
 
 import redir.views
 import incubator.views
-import space.views
+
 
 urlpatterns = [
     path('', incubator.views.home, name='home'),
-    #path('spaceapi.json', space.views.spaceapi, name="spaceapi"),
     path('projects/', include('projects.urls')),
     path('accounts/', include('users.urls')),
     path('space/', include('space.urls')),
