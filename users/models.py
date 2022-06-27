@@ -5,11 +5,6 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, UserManager, PermissionsMixin
 from django.urls import reverse
 from django.core.exceptions import ValidationError
-<<<<<<< HEAD
-
-=======
->>>>>>> 48f207aeab84b2099a5201c96945ffd0aa8c85be
-
 # Create your models here.
 #    User :
 #    Des users ont des skills/badges
@@ -88,10 +83,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         return self.is_superuser
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 48f207aeab84b2099a5201c96945ffd0aa8c85be
     @property
     def gravatar(self):
         mail = self.email.lower().encode('utf8')
@@ -102,12 +93,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_absolute_url(self):
         return reverse('user_profile', args=[self.username])
 
-<<<<<<< HEAD
-=======
 
 class Membership(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return "Membre du hackerspace durant l'année {}".format(self.asbl_year)
->>>>>>> 48f207aeab84b2099a5201c96945ffd0aa8c85be
+
