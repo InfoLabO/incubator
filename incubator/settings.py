@@ -63,6 +63,7 @@ INSTALLED_APPS = (
     "constance",
     "constance.backends.database",
     "simple_history",
+    "gallery",
     "incubator",
     "users",
     "projects",
