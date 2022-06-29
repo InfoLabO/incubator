@@ -63,7 +63,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name="nom d'utilisateur",
         validators=[insensitive_unique_username]
     )
-    email = models.EmailField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
     edited = models.DateTimeField(auto_now=True)
     first_name = models.CharField(max_length=127, blank=True)

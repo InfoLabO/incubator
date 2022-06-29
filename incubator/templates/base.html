@@ -26,14 +26,14 @@
             {% block head %}{% endblock %}
 
             {# Open Graph for Facebook integration http://ogp.me/ #}
-            <meta property="og:site_name" content="UrLab" />
+            <meta property="og:site_name" content="InfoLabO" />
             <meta property="og:locale" content="fr_BE" />
             <meta property="fb:app_id" content="1563249853970263" />
             {% block opengraph %}
                 <meta property="og:title" content="InfoLabO" />
                 <meta property="og:type" content="place" />
-                <meta property="og:url" content="https://urlab.be" />
-                <meta property="og:image" content="https://urlab.be/static/img/space-invaders.png" />
+                <meta property="og:url" content="https://infolabo.org" />
+                <meta property="og:image" content="https://infolabo.org/static/img/space-invaders.png" />
             {% endblock %}
         <script src='https://cdn.jsdelivr.net/npm/@widgetbot/crate@3' async defer>
             new Crate({
@@ -55,36 +55,7 @@
                 {% else %}
                 <div id="home-logo"><a href="/"><img id="home-logo-image" src="/static/infoLabo.png" /></a></div>
                 {% endif %}
-            </header>
-           <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-                  <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Navbar</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarColor01">
-                      <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                          <a class="nav-link active" href="#">Home
-                            <span class="visually-hidden">(current)</span>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">Pricing</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#">About</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-            </nav>
-
-            -->
+            </header>-->
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-rounded shadow">
                 <a class="navbar-brand" href="/">
@@ -108,12 +79,12 @@
                                 Wiki
                             </a>
                         </li>
-                        <li class="nav-item {% active_if_contains '/storage/' %}">
+                       <!-- <li class="nav-item {% active_if_contains '/storage/' %}">
                             <a class="nav-link" href="{% url 'storage_home' %}">
                                 <i class="fa-solid fa-sd-card"></i>
                                 Stockage
                             </a>
-                        </li>
+                        </li>-->
                         <li class="nav-item {% active_if_contains '/gallery/' %}">
                             <a class="nav-link" href="{% url 'gallery_home' %}">
                                 <i class="fa fa-picture-o"></i>
@@ -169,7 +140,7 @@
                 <div class="container ">
                     <p class="text-muted mx-auto">
                          Le code sur <a href="http://github.com/infolabo/incubator">GitHub</a> —
-                         Nous avons un<a href="/api"> API</a>
+                         Nous avons une<a href="/api"> API</a>
                         — InfoLabO Orléans
                     </p>
                 </div>

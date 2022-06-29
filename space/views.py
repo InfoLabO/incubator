@@ -172,8 +172,8 @@ def spaceapi(request):
         #     "calendar": "",
         # },
         "projects": [
-            "https://urlab.be/projects/",
-            "https://github.com/UrLab",
+            "https://infolabo.org/projects/",
+            "https://github.com/InfoLabo",
         ],
     }
 

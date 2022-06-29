@@ -42,7 +42,7 @@ def get_openings_df(from_date, to_date, freq='H'):
 def human_time(options):
     days_names = ["Lundi", "Mardi", "Mercredi",
                   "Jeudi", "Vendredi", "Samedi", "Dimanche"]
-    res = "Ouverture de UrLab: "
+    res = "Ouverture de InfoLabO: "
     if 'weeks' in options:
         res += "{} dernières semaines".format(options['weeks'])
     else:

@@ -54,8 +54,8 @@ class EmailAdmin(admin.ModelAdmin):
             subject=email.subject,
             body = email.content,
             from_email = EMAIL_HOST_USER,
-            to=["soumaha745@gmail.com"],
-            bcc=["soumaha745@gmail.com"],
+            to=[""],
+            bcc=[""],
         )
 
         message.send()

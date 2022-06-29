@@ -191,7 +191,7 @@ REST_FRAMEWORK = {
 }
 
 # no tailing slash
-ROOT_URL = "https://urlab.be"
+ROOT_URL = "https://infolabo.org"
 
 
 BANK_ACCOUNT = "BE66 0017 6764 5043"
@@ -335,7 +335,7 @@ MAC_RANGES = EXPRESSIF_RANGES + VMWARE_RANGES + OTHER_RANGES
 IGNORE_LIST_RE = [re.compile(prefix + r"(:[0-9a-f]{2}){3}") for prefix in MAC_RANGES]
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'soumaha745@gmail.com'
+EMAIL_HOST_USER = 'contact@infolabo.org'
 EMAIL_HOST_PASSWORD = ''  # os.environ['password_key'] suggested
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
